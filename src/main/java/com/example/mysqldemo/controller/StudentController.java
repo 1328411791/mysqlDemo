@@ -16,7 +16,6 @@ public class StudentController {
 
     @Resource
     private StudentService studentService;
-
     @GetMapping("/{id}")
     public Result getStudentById(int id) {
         return Result.ok(studentService.getById(id));

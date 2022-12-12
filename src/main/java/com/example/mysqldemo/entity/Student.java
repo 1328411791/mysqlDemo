@@ -1,11 +1,13 @@
 package com.example.mysqldemo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
 public class Student {
 
-    private int id;
+    @TableId
+    private Integer id;
 
     private int schoolId;
 

@@ -2,7 +2,7 @@ spring:
   application:
       name: demo
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://119.29.84.206:3306/mysqlDemo?useSSL=false&serverTimezone=UTC
     username: root
     password: Ab123456

@@ -3,10 +3,7 @@ package com.example.mysqldemo.controller;
 import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.entity.Student;
 import com.example.mysqldemo.service.StudentService;
-import org.liahnu.pojo.User;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 

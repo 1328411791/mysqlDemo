@@ -28,8 +28,8 @@ public class StudentController {
         return Result.ok(studentService.updateById(student));
     }
 
-    @DeleteMapping("/#{id}")
-    public Result deleteStudent(@PathVariable String id) {
+    @DeleteMapping("")
+    public Result deleteStudent(@RequestParam int id) {
         return Result.ok(studentService.removeById(id));
     }
 }

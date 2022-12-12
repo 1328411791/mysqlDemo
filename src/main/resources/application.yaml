@@ -1,0 +1,13 @@
+spring:
+  application:
+      name: demo
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://119.29.84.206:3306/mysqlDemo?useSSL=false&serverTimezone=UTC
+    username: root
+    password: Ab123456
+mybatis-plus:
+  type-aliases-package: com.demo.entity # 别名扫描包
+logging:
+  level:
+    com.demo: debug

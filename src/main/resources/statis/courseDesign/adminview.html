@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>学生系统管理端</title>
 </head>
 <body>
     <!DOCTYPE html>
@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>学生管理系统</title>
-    <link rel="shortcut icon" href="favicon.ico">
+
     <!-- 引入样式 -->
     <link rel="stylesheet" href="plugins/element-ui/index.css" />
     <link rel="stylesheet" href="styles/common.css" />
@@ -127,14 +127,10 @@
             menuActived: '2',
             userInfo: {},
             menuList: [
-              // {
-              //   id: '1',
-              //   name: '门店管理',
-              //   children: [
                   {
                     id: '2',
-                    name: '学生个人信息查询',
-                    url: 'page/member/list.html',
+                    name: '学生信息查询',
+                    url: 'page/information.html',
                     icon: 'icon-member'
                   },
                   {
@@ -145,16 +141,16 @@
                   },
                   {
                     id: '4',
-                    name: '学生选课信息查询',
+                    name: '学生选课查询',
                     url: 'page/food/list.html',
-                    icon: 'icon-food'
+                    icon: 'icon-category'
                   },
                 
               //   ],
               // },
             ],
-            iframeUrl: 'page/member/list.html',
-            headTitle: '学生管理',
+            iframeUrl: 'page/information.html',
+            headTitle: '学生信息查询',
             goBackFlag: false,
             loading: true,
             timer: null

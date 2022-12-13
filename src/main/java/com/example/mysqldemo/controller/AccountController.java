@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/account")
@@ -17,8 +21,13 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/login")
-    public Result login(@RequestParam String username, @RequestParam String password) {
-        return Result.ok(accountService.loginStudent(username, password));
+    public Result login(@RequestParam String username, @RequestParam String password, HttpServletResponse httpServletResponse) {
+        Result result = accountService.loginStudent(username, password);
+        if(result.getSuccess()) {
+            Cookie cookie=new Cookie("Login_CAS",Long.toString(System.currentTimeMillis()));
+            httpServletResponse.addCookie(cookie);
+        }
+        return result;
     }
 
 

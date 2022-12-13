@@ -3,10 +3,12 @@ package com.example.mysqldemo.controller;
 import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.entity.Student;
 import com.example.mysqldemo.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -20,6 +22,7 @@ public class StudentController {
 
     @PostMapping
     public Result addStudent(@RequestBody Student student) {
+        log.info(student.toString());
         return Result.ok(studentService.save(student));
     }
 

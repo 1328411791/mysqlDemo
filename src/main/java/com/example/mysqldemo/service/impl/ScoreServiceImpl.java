@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mysqldemo.entity.Score;
 import com.example.mysqldemo.mapper.ScoreMapper;
 import com.example.mysqldemo.service.ScoreService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, Score> implements ScoreService {
 
 }

@@ -21,8 +21,8 @@ public class AccountController {
     @Resource
     private AccountService accountService;
 
-    @PostMapping("/login")
     @ApiOperation(value = "登录")
+    @PostMapping(value = "/login", consumes = "application/x-www-form-urlencoded")
     public Result login(@RequestParam String username, @RequestParam String password, HttpServletResponse httpServletResponse) {
         Result result = accountService.loginStudent(username, password);
         if(result.getSuccess()) {

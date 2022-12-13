@@ -9,13 +9,11 @@ public class Student {
     @TableId
     private Integer id;
 
-    private int schoolId;
+    private String schoolId;
 
     private String studentName;
 
     private String password;
 
     private int departmentId;
-
-
 }

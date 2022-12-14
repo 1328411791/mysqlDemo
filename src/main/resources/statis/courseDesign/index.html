@@ -1,0 +1,70 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <script src="https://unpkg.com/vue@next"></script>
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-plus"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>Element Plus demo</title>
+</head>
+<body>
+  <!-- 登录 -->
+<div id="app">
+    <el-form :inline="true" :model="form" class="demo-form-inline">
+        <el-form-item label="Login">
+            <el-input v-model="form.user" placeholder="Approved by" />
+        </el-form-item>
+        <el-form-item label="PassWord">
+            <el-input v-model="form.password" placeholder="Approved by" />
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">Query</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+
+  const App = {
+    <!-- 登录 -->
+    data() {
+      return {
+        form: {
+          username: '',
+          password: ''
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        alert(this.form.user+" "+this.form.password);
+          axios.post("./account/login",
+              {
+              // The data to be sent as part of the request
+              username: this.form.username,
+              password: this.form.password
+          }, {
+              // The optional configuration object
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+          })
+          .then(function (response) {
+            console.log(response.data);
+            const responseData = JSON.parse(toString(response.data));
+            console.log(responseData.success);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    }
+  };
+  const app = Vue.createApp(App);
+  app.use(ElementPlus);
+  app.mount("#app");
+</script>
+</body>
+</html>

@@ -4,17 +4,16 @@ import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Api(tags = "账户管理")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/account")
 public class AccountController {
 
@@ -23,11 +22,13 @@ public class AccountController {
 
     @ApiOperation(value = "登录")
     @PostMapping(value = "/login", consumes = "application/x-www-form-urlencoded")
-    public Result login(@RequestParam String username, @RequestParam String password, HttpServletResponse httpServletResponse) {
+    @ResponseBody
+    public Result login(@RequestParam String username, @RequestParam String password, HttpServletResponse httpServletResponse) throws IOException {
         Result result = accountService.loginStudent(username, password);
         if(result.getSuccess()) {
-            Cookie cookie=new Cookie("Login_CAS",Long.toString(System.currentTimeMillis()));
+            Cookie cookie=new Cookie("Login_CAS",username);
             httpServletResponse.addCookie(cookie);
+            httpServletResponse.sendRedirect("http://localhost:8080/adminview.html");
         }
         return result;
     }

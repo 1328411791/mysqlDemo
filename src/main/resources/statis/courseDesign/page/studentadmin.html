@@ -25,12 +25,6 @@
 
 <body onkeypress="enter()">
 <div id="total">
-    <div id="top">
-        <div class="headerLine">————————————————</div>
-        <div id="header">学生信息管理系统</div>
-        <div class="headerLine">————————————————</div>
-    </div>
-
     <div id="second">
         <button id="add" onclick="add()">新增</button>
         <button id="del" onclick="del()">删除</button>
@@ -41,14 +35,12 @@
             <thead>
             <tr>
                 <th class="col1"><input type="checkbox" onclick="checkAll(this)"/></th>
-                <th class="col2">序号</th>
                 <th class="col3">学号</th>
                 <th class="col4">姓名</th>
                 <th class="col5">学院</th>
                 <th class="col6">专业</th>
                 <th class="col7">年级</th>
                 <th class="col8">班级</th>
-                <th class="col9">年龄</th>
                 <th class="col10">操作</th>
             </tr>
             </thead>
@@ -98,10 +90,6 @@
                 <td class="addTableTd1">班级</td>
                 <td class="addTableTd2"><input type="text" id="stuClass1" /></td>
             </tr>
-            <tr>
-                <td class="addTableTd1">年龄</td>
-                <td class="addTableTd2"><input type="text" id="age1" /></td>
-            </tr>
         </table>
     </div>
     <div style="text-align: right; height: 35px; padding-top: 5px; padding-right: 20px">
@@ -138,10 +126,6 @@
                 <td class="updateTableTd1">班级</td>
                 <td class="updateTableTd2"><input type="text" id="stuClass2" /></td>
             </tr>
-            <tr>
-                <td class="updateTableTd1">年龄</td>
-                <td class="updateTableTd2"><input type="text" id="age2" /></td>
-            </tr>
         </table>
     </div>
     <div style="text-align: right; height: 35px; padding-top: 5px; padding-right: 20px">
@@ -177,10 +161,6 @@
             <tr>
                 <td class="examineTableTd1">班级</td>
                 <td class="examineTableTd2"><input type="text" id="stuClass3" readonly /></td>
-            </tr>
-            <tr>
-                <td class="examineTableTd1">年龄</td>
-                <td class="examineTableTd2"><input type="text" id="age3" readonly /></td>
             </tr>
         </table>
     </div>

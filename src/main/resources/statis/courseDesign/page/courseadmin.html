@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>课程信息管理系统</title>
+  <link rel="stylesheet" href="css/main.css" type="text/css">
+  <link rel="stylesheet" href="css/button.css" type="text/css">
+  <link rel="stylesheet" href="css/add.css" type="text/css">
+  <link rel="stylesheet" href="css/update.css" type="text/css">
+  <link rel="stylesheet" href="css/examine.css" type="text/css">
+  <link rel="stylesheet" href="css/del.css" type="text/css">
+  <script src="js/add.js" type="text/javascript"></script>
+  <script src="js/update.js" type="text/javascript"></script>
+  <script src="js/examine.js" type="text/javascript"></script>
+  <script src="js/del.js" type="text/javascript"></script>
+  <script src="js/flip.js" type="text/javascript"></script>
+  <script>
+    function enter() {
+      if (event.keyCode == 13) {
+        sumbit();
+      }
+    }
+  </script>
+</head>
+
+<body onkeypress="enter()">
+<div id="total">
+  <div id="second">
+    <button id="add" onclick="add()">新增</button>
+    <button id="del" onclick="del()">删除</button>
+  </div>
+
+  <div id="main">
+    <table cellspacing="0px" id="myTable">
+      <thead>
+      <tr>
+        <th class="col1"><input type="checkbox" onclick="checkAll(this)"/></th>
+        <th class="col3">课程id</th>
+        <th class="col4">课程名称</th>
+        <th class="col5">学院</th>
+        <th class="col6">老师id</th>
+
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="final">
+    <p>第</p>
+    <p id="pageNum">1</p>
+    <P>页，共</P>
+    <p id="nums">0</p>
+    <p>条，(每页显示10条)</p>
+    <button id="next" onclick="next()">下一页</button>
+    <button id="previous" onclick="previous()">上一页</button>
+  </div>
+
+</div>
+
+<div id="totalBackground"></div>
+
+<div id="addBlock">
+  <div id="addHeader">新增课程信息</div>
+  <div id="addMain">
+    <table id="addMessageTable">
+      <tr>
+        <td class="addTableTd1">课程id</td>
+        <td class="addTableTd2"><input type="text" id="stuId1" /></td>
+      </tr>
+      <tr>
+        <td class="addTableTd1">课程名称</td>
+        <td class="addTableTd2"><input type="text" id="name1" /></td>
+      </tr>
+      <tr>
+        <td class="addTableTd1">学院</td>
+        <td class="addTableTd2"><input type="text" id="colg1" /></td>
+      </tr>
+      <tr>
+        <td class="addTableTd1">老师id</td>
+        <td class="addTableTd2"><input type="text" id="profession1" /></td>
+      </tr>
+    </table>
+  </div>
+  <div style="text-align: right; height: 35px; padding-top: 5px; padding-right: 20px">
+    <button id="submit" onclick="sumbit()">提交</button>
+    <button id="addCancel" onclick="addCancel()">取消</button>
+  </div>
+</div>
+
+<div id="updateBlock">
+  <div id="updateHeader">修改课程信息</div>
+  <div id="updateMain">
+    <table id="updateMessageTable">
+      <tr>
+        <td class="updateTableTd1">课程id</td>
+        <td class="updateTableTd2"><input type="text" id="stuId2" /></td>
+      </tr>
+      <tr>
+        <td class="updateTableTd1">课程名称</td>
+        <td class="updateTableTd2"><input type="text" id="name2" /></td>
+      </tr>
+      <tr>
+        <td class="updateTableTd1">学院</td>
+        <td class="updateTableTd2"><input type="text" id="colg2" /></td>
+      </tr>
+      <tr>
+        <td class="updateTableTd1">老师id</td>
+        <td class="updateTableTd2"><input type="text" id="profession2" /></td>
+      </tr>
+    </table>
+  </div>
+  <div style="text-align: right; height: 35px; padding-top: 5px; padding-right: 20px">
+    <button id="preservation" onclick="preservation()">保存</button>
+    <button id="updateCancel" onclick="updateCancel()">取消</button>
+  </div>
+</div>
+
+<div id="examineBlock">
+  <div id="examineHeader">查看课程信息</div>
+  <div id="examineMain">
+    <table id="examineMessageTable">
+      <tr>
+        <td class="examineTableTd1">课程id</td>
+        <td class="examineTableTd2"><input type="text" id="stuId3" readonly="readonly" /></td>
+      </tr>
+      <tr>
+        <td class="examineTableTd1">课程名称</td>
+        <td class="examineTableTd2"><input type="text" id="name3" readonly="readonly" /></td>
+      </tr>
+      <tr>
+        <td class="examineTableTd1">学院</td>
+        <td class="examineTableTd2"><input type="text" id="colg3" readonly="readonly" /></td>
+      </tr>
+      <tr>
+        <td class="examineTableTd1">老师id</td>
+        <td class="examineTableTd2"><input type="text" id="profession3" readonly="readonly" /></td>
+      </tr>
+    </table>
+  </div>
+  <div style="text-align: right; height: 35px; padding-top: 5px; padding-right: 20px">
+    <button id="examineCancel" onclick="examineCancel()">取消</button>
+  </div>
+</div>
+
+<div id="delBlock">
+  <div id="delHeader">待删除的课程信息</div>
+  <div id="delMain">
+    <p>您确定删除以下课程的信息</p>
+    <p id="delMessage"></p>
+  </div>
+  <div style="text-align: right; height: 35px; padding-top: 5px; padding-right: 20px">
+    <button id="confirm" onclick="confirm()">确认</button>
+    <button id="delCancel" onclick="delCancel()">取消</button>
+  </div>
+</div>
+</body>
+</html>

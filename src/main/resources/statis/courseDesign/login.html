@@ -16,7 +16,6 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            background: url(background.png) no-repeat 0px 0px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
             -moz-background-size: 100% 100%;
@@ -109,8 +108,17 @@
                     password: password1
                 })
                     .then(function (response) {
-                        // 处理返回的 JSON 数据
                         console.log(response.data);
+                        const data = response.data;
+                        if (data.success === true) {
+                            alert("登录成功");
+                            window.location.href = "adminview.html";
+                        } else {
+                            alert("登录失败");
+                        }
+
+                        // 处理返回的 JSON 数据
+                        console.log(person);
                     })
                     .catch(function (error) {
                         //处理错误

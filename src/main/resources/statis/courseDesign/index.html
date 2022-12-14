@@ -52,9 +52,14 @@
               }
           })
           .then(function (response) {
-            console.log(response.data);
-            const responseData = JSON.parse(toString(response.data));
-            console.log(responseData.success);
+              console.log(response.data);
+              const data = response.data;
+              if (data.success === true) {
+                  alert("登录成功");
+                  window.location.href = "adminview.html";
+              } else {
+                  alert("登录失败");
+              }
           })
           .catch(function (error) {
             console.log(error);

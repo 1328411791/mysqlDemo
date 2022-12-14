@@ -23,6 +23,12 @@ public class CourseContoller {
         return Result.ok(courseService.getById(id));
     }
 
+    @GetMapping("/all")
+    @ApiOperation(value = "查找所有课程")
+    public Result getAllCourse() {
+        return Result.ok(courseService.list());
+    }
+
     @PostMapping
     @ApiOperation(value = "增加课程")
     public Result addCourse(@RequestBody Course course) {

@@ -28,7 +28,6 @@ public class AccountController {
         if(result.getSuccess()) {
             Cookie cookie=new Cookie("Login_CAS",username);
             httpServletResponse.addCookie(cookie);
-            httpServletResponse.sendRedirect("http://localhost:8080/adminview.html");
         }
         return result;
     }

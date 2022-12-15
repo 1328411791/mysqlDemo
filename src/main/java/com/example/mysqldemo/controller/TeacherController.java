@@ -42,7 +42,7 @@ public class TeacherController {
     }
 
     @DeleteMapping()
-    public Result deleteTeacher(@RequestBody Integer id) {
+    public Result deleteTeacher(@RequestParam Integer id) {
         return Result.ok(teacherService.removeById(id));
     }
 }

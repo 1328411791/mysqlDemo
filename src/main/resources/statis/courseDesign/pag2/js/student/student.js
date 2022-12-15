@@ -33,3 +33,13 @@ function deleteStudent (params) {
         }
     })
 }
+
+function getStudentByName (params) {
+    return axios ({
+        url: '/student/selectStudenName',
+        method: 'post',
+        params:{
+            studentName: params
+        }
+    })
+}

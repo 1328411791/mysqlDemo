@@ -21,7 +21,7 @@
                     <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer"
                        @click="handleQuery"></i>
                 </el-input>
-                <el-button type="primary" @click="showAddStu">+ 添加课程</el-button>
+                <el-button type="primary" @click="showAddStu">+ 添加学生</el-button>
             </div>
             <el-table :data="tableData" class="table-box">
                 <el-table-column prop="id" label="id"></el-table-column>
@@ -117,8 +117,12 @@
                 },
                 // 分页 条件查询
                 handleQuery() {
-
-
+                    getStudentByName(this.inputMessage).then(res => {
+                        this.tableData = res.data.data
+                        this.counts = res.data.total
+                    }).catch(err => {
+                        this.$message.error('请求出错了：' + err)
+                    })
                 },
                 showAddStu() {
                     //弹出窗口
@@ -195,7 +199,6 @@
                             message: '已取消删除'
                         });
                     })
-                    this.init();
                 },
             },
         });

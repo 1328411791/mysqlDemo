@@ -24,9 +24,10 @@
 
 <el-table
             :data="studentScore"
-            style="width: 100%">
+            style="width: 100%"
+            @selection-change="handleSelectionChange">
         <el-table-column
-                prop="studentId"
+                prop="schoolId"
                 label="学号"
                 width="180">
         </el-table-column>
@@ -62,28 +63,21 @@
         <!-- 登录 -->
         data() {
             return {
-                studentScore: [
-                    {
-                        "id": "0",
-                        "schoolId": "202144011308",
-                        "studentName": "张三",
-                        "courseName": "高等数学",
-                        "score": "80",
-                        "teacherName": "李四"
-                    }
-                ],
+                studentScore: [],
                 studentTotal: 0,
             }
         },
         methods: {
             getStudentScore() {
+                var _this = this;
+
                 axios.get("./score/getByStudentId")
                     .then(function (response) {
                         console.log(response.data.data);
-                        this.studentScore = response.data.data;
-                        this.studentTotal = response.data.total;
+                        _this.studentScore = response.data.data;
+                        _this.studentTotal = response.data.total;
                         <!-- 给studentScore添加一个key -->
-                        this.studentScore.forEach((item, index) => {
+                        _this.studentScore.forEach((item, index) => {
                             item.key = index;
                         })
                         console.log(this.studentScore);

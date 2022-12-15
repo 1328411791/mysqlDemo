@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生管理系统</title>
+    <link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+    <script src="js/vue.js"></script>
+    <script src="element-ui/lib/index.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="js/student/student.js"></script>
+</head>
+<body>
+<div id="div" style="padding: 20px; height: 100%">
+    <div><b style="color: #000; font-size: 30px;">学院列表</b></div>
+    <div style="display: flex; justify-content: space-between;margin-bottom: 20px; margin-top: 20px;">
+        <el-button type="primary" @click="showAddStu">+ 添加学院</el-button>
+    </div>
+
+    <el-table :data="tableData" class="table-box" >
+        <el-table-column prop="departmentLocation" label="学院地址"></el-table-column>
+        <el-table-column prop="departmentName" label="学院名称"></el-table-column>
+        <el-table-column prop="id" label="学院id"></el-table-column>
+        <el-table-column label="操作">
+            <template slot-scope="props">
+                <el-button type="primary" plain @click="showEditStu(props.row)">编辑</el-button>
+                <el-button type="danger" plain @click="deleteStu(props.row)">删除</el-button>
+            </template>
+        </el-table-column>
+
+    </el-table>
+
+    <el-dialog width="40%" title="添加学院信息" :visible.sync="dialogTableVisible4add">
+        <el-form :model="formData" label-width="100px">
+            <el-form-item label="学院地址" prop="departmentLocation">
+                <el-input v-model="formData.departmentLocation"></el-input>
+            </el-form-item>
+            <el-form-item label="学院名称" prop="departmentName">
+                <el-input v-model="formData.departmentName"></el-input>
+            </el-form-item>
+            <el-form-item label="学院id" prop="id">
+                <el-input v-model="formData.id"></el-input>
+            </el-form-item>
+            <el-form-item align="right">
+                <el-button type="primary" @click="addStu(formData)">添加</el-button>
+                <el-button @click="resetForm('formData')">重置</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+
+    <el-dialog width="40%" title="编辑学院信息" :visible.sync="dialogTableVisible4edit">
+        <el-form :model="editFormData"  ref="editForm" label-width="100px">
+            <el-form-item label="学院地址" prop="departmentLocation">
+                <el-input v-model="editFormData.departmentLocation"></el-input>
+            </el-form-item>
+            <el-form-item label="学院名称" prop="departmentName">
+                <el-input v-model="editFormData.departmentName"></el-input>
+            </el-form-item>
+            <el-form-item label="学院id" prop="id">
+                <el-input v-model="editFormData.id"></el-input>
+            </el-form-item>
+            <el-form-item align="right">
+                <el-button type="primary" @click="updateStu()">修改</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+</div>
+
+<script>
+    new Vue({
+        el: "#div",
+        data: {
+            inputMessage: '', //搜索框信息
+            dialogTableVisible4add: false,  //添加窗口显示状态
+            dialogTableVisible4edit: false, //编辑窗口显示状态
+            formData: {},//添加表单的数据
+            editFormData: {},//编辑表单的数据
+            tableData: [],//表格数据
+        },
+        created() {
+            this.init();
+        },
+
+        methods: {
+            async init () {
+                const _this = this;
+                await getStudentList().then(res => {
+                    console.log(res.data.data);
+                    _this.tableData = res.data.data
+                    _this.counts = res.data.total
+
+                }).catch(err => {
+                    this.$message.error('请求出错了：' + err)
+                })
+            },
+            // 分页 条件查询
+            handleQuery() {
+                this.page = 1;
+                this.init();
+            },
+            showAddStu() {
+                //弹出窗口
+                this.dialogTableVisible4add = true;
+            },
+            //添加学生功能
+            addStu(params) {
+                addStudent(params).then(res => {
+                    if(res.data.success === 1) {
+                        this.$message.success("添加成功")
+                        this.init();
+                    }
+                }).catch(err => {
+                    this.$message.error('请求出错了：' + err)
+                })
+                this.formData = {};
+                this.dialogTableVisible4add = false;
+            },
+            resetForm(formData) {
+                //双向绑定，输入的数据都赋值给了formData， 清空formData数据
+                this.formData = {};
+                //清除表单的校验数据
+                this.$refs[formData].resetFields();
+            },
+            showEditStu(row) {
+                //1. 弹出窗口
+                this.dialogTableVisible4edit = true;
+                //2. 显示表单数据---相当于之前的数据回显
+                console.log(row)
+                this.editFormData = row
+                this.editFormData.studentSex = row.studentSex === '0' ? '女' : '男'
+            },
+            //修改学生
+            updateStu() {
+                const params = {
+                    ...this.editFormData,
+                    studentSex: this.editFormData.studentSex
+                }
+                console.log(params)
+                updateStudent(params).then(res => {
+                    console.log(res)
+                    if(res.data.success === true) {
+                        this.$message.success(res.data.data)
+                        this.init()
+                    } else {
+                        this.$message.error("修改失败")
+                    }
+                })
+                this.formData = {};
+                this.dialogTableVisible4edit = false;
+                this.init();
+            },
+
+            //删除学生
+            deleteStu(row) {
+                const params = row.id;
+                console.log(params)
+                this.$confirm('此操作将永久删除该数据， 是否继续', '警告', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    deleteStudent(params).then(res => {
+                        if(res.data.success === true) {
+                            this.$message.success(res.data.data)
+                            this.init();
+                        } else {
+                            this.$message("删除失败")
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                })
+                this.init();
+            },
+        },
+    });
+</script>
+
+</body>
+
+</html>

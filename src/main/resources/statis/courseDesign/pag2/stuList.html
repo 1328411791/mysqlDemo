@@ -67,9 +67,6 @@
 
             <el-dialog width="40%" title="编辑学生信息" :visible.sync="dialogTableVisible4edit">
                 <el-form :model="editFormData"  ref="editForm" label-width="100px">
-                    <el-form-item label="班级" prop="idClass">
-                        <el-input v-model="editFormData.idClass"></el-input>
-                    </el-form-item>
                     <el-form-item label="id" prop="id">
                         <el-input v-model="editFormData.id"></el-input>
                     </el-form-item>

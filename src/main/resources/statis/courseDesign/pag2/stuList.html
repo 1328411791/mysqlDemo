@@ -131,7 +131,7 @@
                 //添加学生功能
                 addStu(params) {
                     addStudent(params).then(res => {
-                        if(res.data.code === 1) {
+                        if(res.data.success === true) {
                             this.$message.success("添加成功")
                             this.init();
                         }

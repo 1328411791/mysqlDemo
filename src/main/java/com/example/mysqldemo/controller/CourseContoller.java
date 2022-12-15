@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Api(tags = "课程管理")
 @RestController
@@ -26,7 +27,8 @@ public class CourseContoller {
     @GetMapping("/all")
     @ApiOperation(value = "查找所有课程")
     public Result getAllCourse() {
-        return Result.ok(courseService.list());
+        List<Course> courseList = courseService.list();
+        return Result.ok(courseList,(long)courseList.size());
     }
 
     @PostMapping

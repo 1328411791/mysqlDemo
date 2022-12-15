@@ -7,6 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>学生管理系统</title>
         <link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+        <script src="js/vue.js"></script>
+        <script src="element-ui/lib/index.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+        <script src="js/student/student.js"></script>
     </head>
     <body>
         <div id="div" style="padding: 20px; height: 100%">
@@ -20,42 +24,33 @@
                 <el-button type="primary" @click="showAddStu">+ 添加学生</el-button>
             </div>
 
-            <el-table :data="studentScore" class="table-box"  :row-class-name="tableRowClassName">
+            <el-table :data="tableData" class="table-box">
                 <el-table-column prop="id" label="id"></el-table-column>
                 <el-table-column prop="schoolId" label="学号"></el-table-column>
                 <el-table-column prop="studentName" label="姓名"></el-table-column>
-                <el-table-column prop="sex" label="性别">
-                    <template slot-scope="scope">
-                        {{ String(scope.row.sex) === '0' ? '女' : '男' }}
-                    </template>
+                <el-table-column prop="studentSex" label="性别">
                 </el-table-column>
                 <el-table-column prop="departmentId" label="学院号">
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="props">
                         <el-button type="primary" plain @click="showEditStu(props.row)">编辑</el-button>
-                        <el-button type="danger" plain @click="deleteStu(props.row)">删除</el-button>
+                        <el-button type="danger" plain @click="deleteStu(tableData[props.row].id)">删除</el-button>
                     </template>
                 </el-table-column>
 
             </el-table>
 
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
-                :page-sizes="[5, 10, 20]" :page-size="pageSize" :total="counts"
-                layout="total, sizes, prev, pager, next, jumper" style="text-align: right; margin-top: 20px">
-            </el-pagination>
-
-
             <el-dialog width="40%" title="添加学生信息" :visible.sync="dialogTableVisible4add">
-                <el-form :model="formData" :rules="rules" ref="formData" label-width="100px">
+                <el-form :model="formData" ref="formData" label-width="100px">
                     <el-form-item label="学号" prop="schoolId">
                         <el-input v-model="formData.schoolId"></el-input>
                     </el-form-item>
                     <el-form-item label="姓名" prop="studentName">
                         <el-input v-model="formData.studentName"></el-input>
                     </el-form-item>
-                    <el-form-item label="性别" prop="sex">
-                        <el-radio-group v-model="formData.sex">
+                    <el-form-item label="性别" prop="studentSex">
+                        <el-radio-group v-model="formData.studentSex">
                             <el-radio label="男"></el-radio>
                             <el-radio label="女"></el-radio>
                         </el-radio-group>
@@ -64,14 +59,14 @@
                         <el-input v-model="formData.departmentId"></el-input>
                     </el-form-item>
                     <el-form-item align="right">
-                        <el-button type="primary" @click="addStu()">添加</el-button>
+                        <el-button type="primary" @click="addStu(formData)">添加</el-button>
                         <el-button @click="resetForm('formData')">重置</el-button>
                     </el-form-item>
                 </el-form>
             </el-dialog>
 
             <el-dialog width="40%" title="编辑学生信息" :visible.sync="dialogTableVisible4edit">
-                <el-form :model="editFormData" :rules="rules" ref="editForm" label-width="100px">
+                <el-form :model="editFormData"  ref="editForm" label-width="100px">
                     <el-form-item label="班级" prop="idClass">
                         <el-input v-model="editFormData.idClass"></el-input>
                     </el-form-item>
@@ -81,14 +76,11 @@
                     <el-form-item label="姓名" prop="studentName">
                         <el-input v-model="editFormData.studentName"></el-input>
                     </el-form-item>
-                    <el-form-item label="性别" prop="sex">
-                        <el-radio-group v-model="editFormData.sex">
+                    <el-form-item label="性别" prop="studentSex">
+                        <el-radio-group v-model="editFormData.studentSex">
                             <el-radio label="男"></el-radio>
                             <el-radio label="女"></el-radio>
                         </el-radio-group>
-                    <el-form-item label="密码" prop="password">
-                        <el-input v-model="editFormData.password"></el-input>
-                    </el-form-item>
                     </el-form-item>
                     <el-form-item label="学院号" prop="departmentId">
                         <el-input v-model="editFormData.departmentId"></el-input>
@@ -100,59 +92,6 @@
             </el-dialog>
         </div>
 
-        <div>
-            <script src="js/vue.js"></script>
-            <script src="element-ui/lib/index.js"></script>
-            <script src="js/axios-0.18.0.js"></script>
-            <script src="js/student/student.js"></script>
-            <script>
-
-                const App = {
-                    <!-- 登录 -->
-                    data() {
-                        return {
-                            studentScore: [
-                                {
-                                    "id": "0",
-                                    "schoolId": "202144011308",
-                                    "studentName": "张三",
-                                    "courseName": "高等数学",
-                                    "score": "80",
-                                    "teacherName": "李四"
-                                }
-                            ],
-                            studentTotal: 0,
-                        }
-                    },
-                    methods: {
-                        getStudentScore() {
-                            axios.get("./score/getByStudentId")
-                                .then(function (response) {
-                                    console.log(response.data.data);
-                                    this.studentScore = response.data.data;
-                                    this.studentTotal = response.data.total;
-                                    <!-- 给studentScore添加一个key -->
-                                    this.studentScore.forEach((item, index) => {
-                                        item.key = index;
-                                    })
-                                    console.log(this.studentScore);
-                                    <!-- 重新渲染表格 -->
-                                    this.$forceUpdate();
-
-                                })
-                                .catch(function (error) {
-                                    console.log(error);
-                                });
-                        }
-                }
-                };
-
-                const app = Vue.createApp(App);
-                app.use(ElementPlus);
-                app.mount("#app");
-            </script>
-
-
             <script>
                 new Vue({
             el: "#div",
@@ -162,56 +101,20 @@
                 dialogTableVisible4edit: false, //编辑窗口显示状态
                 formData: {},//添加表单的数据
                 editFormData: {},//编辑表单的数据
-                counts: 0,      //总条数
-                page: 1,        //当前页
-                pageSize: 5,    //每页显示条数
                 tableData: [],//表格数据
-                rules: {
-                    id: [
-                        {required: true, message: '请输入班级', trigger: 'blur'},
-                        {min: 7, max: 7, message: '7 个数字~', trigger: 'blur'}
-                    ],
-
-                    schoolId: [
-                        {required: true, message: '请输入学号', trigger: 'blur'},
-                        {min: 10, max: 10, message: '10 个数字~', trigger: 'blur'}
-                    ],
-                    studentName: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'},
-                        {min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur'}
-                    ],
-                    password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'},
-                        {min: 6, max: 11, message: '6 个数字~11个数字', trigger: 'blur'}
-                    ],
-                    sex: [
-                        {required: true, message: '请选择性别', trigger: 'blur'},
-                    ],
-                    departmentId: [
-                        {required: true, message: '请输入学院号', trigger: 'blur'},
-                        {min: 1, max: 18, message: '1个数字~', trigger: 'blur'}
-                    ]
-                }
             },
             created() {
-                //调用分页查询功能
                 this.init();
             },
 
             methods: {
                 async init () {
-                    const params = {
-                        page: this.page,
-                        pageSize: this.pageSize,
-                        idClass: this.inputMessage ? this.inputMessage : undefined
-                    }
-                    await getStudentList(params).then(res => {
+                    const _this = this;
+                    await getStudentList().then(res => {
                         console.log(res.data.data);
-                        if (String(res.data.code) === '1') {
+                        _this.tableData = res.data.data
+                        _this.counts = res.data.total
 
-                            this.tableData = res.data.data.records
-                            this.counts = res.data.data.total
-                        }
                     }).catch(err => {
                         this.$message.error('请求出错了：' + err)
                     })
@@ -226,11 +129,7 @@
                     this.dialogTableVisible4add = true;
                 },
                 //添加学生功能
-                addStu() {
-                    // const params = {
-                    //     ...this.formData,
-                    //     sex: this.formData.sex === '女' ? '0' : '1'
-                    // }
+                addStu(params) {
                     addStudent(params).then(res => {
                         if(res.data.code === 1) {
                             this.$message.success("添加成功")
@@ -269,17 +168,17 @@
                     //2. 显示表单数据---相当于之前的数据回显
                     console.log(row)
                     this.editFormData = row
-                    this.editFormData.sex = row.sex === '0' ? '女' : '男'
+                    this.editFormData.studentSex = row.studentSex === '0' ? '女' : '男'
                 },
                 //修改学生
                 updateStu() {
                     const params = {
                         ...this.editFormData,
-                        // sex: this.editFormData.sex === '女' ? '0' : '1'
+                        studentSex: this.editFormData.studentSex === '女' ? '0' : '1'
                     }
                     updateStudent(params).then(res => {
                         console.log(res)
-                        if(res.data.code === 1) {
+                        if(res.data.success === true) {
                             this.$message.success(res.data.data)
                             this.init()
                         } else {
@@ -293,6 +192,7 @@
                 //删除学生
                 deleteStu(row) {
                     const params = row
+                    console.log(params)
                     this.$confirm('此操作将永久删除该数据， 是否继续', '警告', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
@@ -318,7 +218,6 @@
         });
             </script>
 
-        </div>
     </body>
 
     </html>

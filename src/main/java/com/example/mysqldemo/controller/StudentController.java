@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Slf4j
@@ -29,7 +30,8 @@ public class StudentController {
     @GetMapping("/all")
     @ApiOperation(value = "获取所有学生")
     public Result getAllStudent() {
-        return Result.ok(studentService.list());
+        List<Student> studentList = studentService.list();
+        return Result.ok(studentList,(long)studentList.size());
     }
 
     @PostMapping

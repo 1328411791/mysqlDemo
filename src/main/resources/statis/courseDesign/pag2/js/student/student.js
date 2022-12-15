@@ -1,8 +1,7 @@
-function getStudentList (params) {
+function getStudentList () {
     return axios ({
         url: '/student/all',
-        method: 'get',
-        params
+        method: 'get'
     })
 }
 
@@ -19,8 +18,10 @@ function addStudent (params) {
 function updateStudent (params) {
     return axios ({
         url: '/student',
-        method: 'post',
-        data: params
+        method: 'put',
+        data:{
+            id: params,
+        }
     })
 }
 
@@ -29,6 +30,9 @@ function deleteStudent (params) {
     return axios ( {
         url: '/student',
         method: 'delete',
-        data: params
+        data: params,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     })
 }

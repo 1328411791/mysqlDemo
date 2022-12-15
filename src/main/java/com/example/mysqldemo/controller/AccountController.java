@@ -26,7 +26,7 @@ public class AccountController {
     public Result login(@RequestParam String username, @RequestParam String password, HttpServletResponse httpServletResponse) throws IOException {
         Result result = accountService.loginStudent(username, password);
         if(result.getSuccess()) {
-            Cookie cookie=new Cookie("Login_CAS",username);
+            Cookie cookie=new Cookie("username",username);
             httpServletResponse.addCookie(cookie);
         }
         return result;

@@ -20,9 +20,10 @@
     <!-- 写个表格实时填充studentScore里面的内容 后面有更新和删除按钮 -->
 <el-table
             :data="studentScore"
-            style="width: 100%">
+            style="width: 100%"
+            @selection-change="handleSelectionChange">
         <el-table-column
-                prop="studentId"
+                prop="schoolId"
                 label="学号"
                 width="180">
         </el-table-column>
@@ -64,13 +65,15 @@
         },
         methods: {
             getStudentScore() {
+                var _this = this;
+
                 axios.get("./score/getByStudentId")
                     .then(function (response) {
                         console.log(response.data.data);
-                        this.studentScore = response.data.data;
-                        this.studentTotal = response.data.total;
+                        _this.studentScore = response.data.data;
+                        _this.studentTotal = response.data.total;
                         <!-- 给studentScore添加一个key -->
-                        this.studentScore.forEach((item, index) => {
+                        _this.studentScore.forEach((item, index) => {
                             item.key = index;
                         })
                         console.log(this.studentScore);

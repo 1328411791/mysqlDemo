@@ -10,7 +10,7 @@
     <script src="js/vue.js"></script>
     <script src="element-ui/lib/index.js"></script>
     <script src="js/axios-0.18.0.js"></script>
-    <script src="js/student/student.js"></script>
+    <script src="js/course/course.js"></script>
 </head>
 <body>
 <div id="div" style="padding: 20px; height: 100%">
@@ -21,11 +21,11 @@
             <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer"
                @click="handleQuery"></i>
         </el-input>
-        <el-button type="primary" @click="showAddStu">+ 添加课程</el-button>
+        <el-button type="primary" @click="showAddcourse>+ 添加课程</el-button>
     </div>
 
 
-    <el-table :data="studentScore" class="table-box" >
+    <el-table :data="tableData" class="table-box" >
         <el-table-column prop="courseName" label="课程名称"></el-table-column>
         <el-table-column prop="departmentId" label="学院id"></el-table-column>
         <el-table-column prop="id" label="课程id"></el-table-column>
@@ -34,8 +34,8 @@
         <el-table-column prop="Stid" label="学生学号"></el-table-column>
         <el-table-column label="操作">
             <template slot-scope="props">
-                <el-button type="primary" plain @click="showEditStu(props.row)">编辑</el-button>
-                <el-button type="danger" plain @click="deleteStu(props.row)">删除</el-button>
+                <el-button type="primary" plain @click="showEditcourse(props.row)">编辑</el-button>
+                <el-button type="danger" plain @click="deletecourse(props.row)">删除</el-button>
             </template>
         </el-table-column>
 
@@ -59,7 +59,7 @@
                 <el-input v-model="formData.Stid"></el-input>
             </el-form-item>
             <el-form-item align="right">
-                <el-button type="primary" @click="addStu()">添加</el-button>
+                <el-button type="primary" @click="addcourse()">添加</el-button>
                 <el-button @click="resetForm('formData')">重置</el-button>
             </el-form-item>
         </el-form>
@@ -86,7 +86,7 @@
                 <el-input v-model="editFormData.Stid"></el-input>
             </el-form-item>
             <el-form-item align="right">
-                <el-button type="primary" @click="updateStu()">修改</el-button>
+                <el-button type="primary" @click="updatecourse()">修改</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -110,7 +110,7 @@
         methods: {
             async init () {
                 const _this = this;
-                await getStudentList().then(res => {
+                await getcourseList().then(res => {
                     console.log(res.data.data);
                     _this.tableData = res.data.data
                     _this.counts = res.data.total
@@ -124,13 +124,13 @@
                 this.page = 1;
                 this.init();
             },
-            showAddStu() {
+            showAddcourse() {
                 //弹出窗口
                 this.dialogTableVisible4add = true;
             },
             //添加学生功能
-            addStu(params) {
-                addStudent(params).then(res => {
+            addcourse(params) {
+                addcourse(params).then(res => {
                     if(res.data.success === 1) {
                         this.$message.success("添加成功")
                         this.init();
@@ -147,22 +147,20 @@
                 //清除表单的校验数据
                 this.$refs[formData].resetFields();
             },
-            showEditStu(row) {
+            showEditcourse(row) {
                 //1. 弹出窗口
                 this.dialogTableVisible4edit = true;
                 //2. 显示表单数据---相当于之前的数据回显
                 console.log(row)
                 this.editFormData = row
-                this.editFormData.studentSex = row.studentSex === '0' ? '女' : '男'
             },
             //修改学生
-            updateStu() {
+            updatecourse() {
                 const params = {
                     ...this.editFormData,
-                    studentSex: this.editFormData.studentSex
                 }
                 console.log(params)
-                updateStudent(params).then(res => {
+                updatecourse(params).then(res => {
                     console.log(res)
                     if(res.data.success === true) {
                         this.$message.success(res.data.data)
@@ -177,7 +175,7 @@
             },
 
             //删除学生
-            deleteStu(row) {
+            deletecourse(row) {
                 const params = row.id;
                 console.log(params)
                 this.$confirm('此操作将永久删除该数据， 是否继续', '警告', {
@@ -185,7 +183,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    deleteStudent(params).then(res => {
+                    deletecourse(params).then(res => {
                         if(res.data.success === true) {
                             this.$message.success(res.data.data)
                             this.init();

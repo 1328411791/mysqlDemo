@@ -86,7 +86,7 @@
         methods: {
             async init () {
                 const _this = this;
-                await getStudentList().then(res => {
+                await getdepartmentList().then(res => {
                     console.log(res.data.data);
                     _this.tableData = res.data.data
                     _this.counts = res.data.total
@@ -106,7 +106,7 @@
             },
             //添加学生功能
             addStu(params) {
-                addStudent(params).then(res => {
+                adddepartment(params).then(res => {
                     if(res.data.success === 1) {
                         this.$message.success("添加成功")
                         this.init();

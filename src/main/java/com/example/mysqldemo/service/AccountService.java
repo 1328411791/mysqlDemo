@@ -5,4 +5,8 @@ import com.example.mysqldemo.entity.Student;
 
 public interface AccountService {
     Result loginStudent(String username, String password);
+
+    Result forgetPassword(String username, String password);
+
+    Result register(Student student);
 }

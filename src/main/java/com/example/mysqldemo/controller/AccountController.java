@@ -1,7 +1,9 @@
 package com.example.mysqldemo.controller;
 
 import com.example.mysqldemo.common.Result;
+import com.example.mysqldemo.entity.Student;
 import com.example.mysqldemo.service.AccountService;
+import com.example.mysqldemo.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,18 @@ public class AccountController {
         Cookie cookie=new Cookie("username","");
         httpServletResponse.addCookie(cookie);
         return Result.ok();
+    }
+
+    @ApiOperation(value = "忘记密码")
+    @PostMapping(value = "/forgetPassword" , consumes = "application/x-www-form-urlencoded")
+    public Result forgetPassword(@RequestParam String username, @RequestParam String password) {
+        return accountService.forgetPassword(username, password);
+    }
+
+    @ApiOperation(value = "注册")
+    @PostMapping(value = "/register" )
+    public Result register(@RequestBody Student student) {
+        return accountService.register(student);
     }
 
 }

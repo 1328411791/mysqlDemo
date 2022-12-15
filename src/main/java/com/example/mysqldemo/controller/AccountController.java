@@ -28,6 +28,8 @@ public class AccountController {
         Result result = accountService.loginStudent(username, password);
         if(result.getSuccess()) {
             Cookie cookie=new Cookie("username",username);
+            cookie.setMaxAge(60*60*24*7);
+            cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
         }
         return result;

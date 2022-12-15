@@ -18,10 +18,6 @@
     <!-- 显示查询结果数量 -->
     <h3>查询结果数量：{{this.studentTotal}}</h3>
     <!-- 写个表格实时填充studentScore里面的内容 后面有更新和删除按钮 -->
-
-
-
-
 <el-table
             :data="studentScore"
             style="width: 100%">
@@ -62,16 +58,7 @@
         <!-- 登录 -->
         data() {
             return {
-                studentScore: [
-                    {
-                        "id": "0",
-                        "schoolId": "202144011308",
-                        "studentName": "张三",
-                        "courseName": "高等数学",
-                        "score": "80",
-                        "teacherName": "李四"
-                    }
-                ],
+                studentScore: [],
                 studentTotal: 0,
             }
         },
@@ -95,7 +82,7 @@
                         console.log(error);
                     });
             },
-            deleteCourse(index){
+            deleteStudentScore(index){
                 const courseId = this.studentScore[index].id;
                 axios.delete("./course", {
                     courseId: courseId

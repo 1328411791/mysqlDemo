@@ -20,14 +20,16 @@
                 <el-button type="primary" @click="showAddStu">+ 添加学生</el-button>
             </div>
 
-            <el-table :data="tableData" class="table-box"  :row-class-name="tableRowClassName">
-
+            <el-table :data="studentScore" class="table-box"  :row-class-name="tableRowClassName">
                 <el-table-column prop="id" label="id"></el-table-column>
                 <el-table-column prop="schoolId" label="学号"></el-table-column>
                 <el-table-column prop="studentName" label="姓名"></el-table-column>
-                <el-table-column prop="password" label="密码"></el-table-column>
+                <el-table-column prop="sex" label="性别">
+                    <template slot-scope="scope">
+                        {{ String(scope.row.sex) === '0' ? '女' : '男' }}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="departmentId" label="学院号">
-
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="props">
@@ -46,24 +48,18 @@
 
             <el-dialog width="40%" title="添加学生信息" :visible.sync="dialogTableVisible4add">
                 <el-form :model="formData" :rules="rules" ref="formData" label-width="100px">
-                    <el-form-item label="id" prop="id">
-                        <el-input v-model="formData.id"></el-input>
-                    </el-form-item>
                     <el-form-item label="学号" prop="schoolId">
                         <el-input v-model="formData.schoolId"></el-input>
                     </el-form-item>
                     <el-form-item label="姓名" prop="studentName">
                         <el-input v-model="formData.studentName"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" prop="password">
-                        <el-input v-model="formData.password"></el-input>
+                    <el-form-item label="性别" prop="sex">
+                        <el-radio-group v-model="formData.sex">
+                            <el-radio label="男"></el-radio>
+                            <el-radio label="女"></el-radio>
+                        </el-radio-group>
                     </el-form-item>
-<!--                    <el-form-item label="性别" prop="sex">-->
-<!--                        <el-radio-group v-model="formData.sex">-->
-<!--                            <el-radio label="男"></el-radio>-->
-<!--                            <el-radio label="女"></el-radio>-->
-<!--                        </el-radio-group>-->
-<!--                    </el-form-item>-->
                     <el-form-item label="学院号" prop="departmentId">
                         <el-input v-model="formData.departmentId"></el-input>
                     </el-form-item>
@@ -85,14 +81,14 @@
                     <el-form-item label="姓名" prop="studentName">
                         <el-input v-model="editFormData.studentName"></el-input>
                     </el-form-item>
+                    <el-form-item label="性别" prop="sex">
+                        <el-radio-group v-model="editFormData.sex">
+                            <el-radio label="男"></el-radio>
+                            <el-radio label="女"></el-radio>
+                        </el-radio-group>
                     <el-form-item label="密码" prop="password">
                         <el-input v-model="editFormData.password"></el-input>
                     </el-form-item>
-<!--                    <el-form-item label="性别" prop="sex">-->
-<!--                        <el-radio-group v-model="editFormData.sex">-->
-<!--                            <el-radio label="男"></el-radio>-->
-<!--                            <el-radio label="女"></el-radio>-->
-<!--                        </el-radio-group>-->
                     </el-form-item>
                     <el-form-item label="学院号" prop="departmentId">
                         <el-input v-model="editFormData.departmentId"></el-input>
@@ -109,6 +105,54 @@
             <script src="element-ui/lib/index.js"></script>
             <script src="js/axios-0.18.0.js"></script>
             <script src="js/student/student.js"></script>
+            <script>
+
+                const App = {
+                    <!-- 登录 -->
+                    data() {
+                        return {
+                            studentScore: [
+                                {
+                                    "id": "0",
+                                    "schoolId": "202144011308",
+                                    "studentName": "张三",
+                                    "courseName": "高等数学",
+                                    "score": "80",
+                                    "teacherName": "李四"
+                                }
+                            ],
+                            studentTotal: 0,
+                        }
+                    },
+                    methods: {
+                        getStudentScore() {
+                            axios.get("./score/getByStudentId")
+                                .then(function (response) {
+                                    console.log(response.data.data);
+                                    this.studentScore = response.data.data;
+                                    this.studentTotal = response.data.total;
+                                    <!-- 给studentScore添加一个key -->
+                                    this.studentScore.forEach((item, index) => {
+                                        item.key = index;
+                                    })
+                                    console.log(this.studentScore);
+                                    <!-- 重新渲染表格 -->
+                                    this.$forceUpdate();
+
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                        }
+                }
+                };
+
+                const app = Vue.createApp(App);
+                app.use(ElementPlus);
+                app.mount("#app");
+            </script>
+
+
             <script>
                 new Vue({
             el: "#div",
@@ -140,9 +184,9 @@
                         {required: true, message: '请输入密码', trigger: 'blur'},
                         {min: 6, max: 11, message: '6 个数字~11个数字', trigger: 'blur'}
                     ],
-                    // sex: [
-                    //     {required: true, message: '请选择性别', trigger: 'blur'},
-                    // ],
+                    sex: [
+                        {required: true, message: '请选择性别', trigger: 'blur'},
+                    ],
                     departmentId: [
                         {required: true, message: '请输入学院号', trigger: 'blur'},
                         {min: 1, max: 18, message: '1个数字~', trigger: 'blur'}

@@ -1,4 +1,4 @@
-package com.example.mysqldemo.entity.dto;
+package com.example.mysqldemo.entity;
 
 import lombok.Data;
 

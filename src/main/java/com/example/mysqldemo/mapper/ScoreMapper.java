@@ -2,7 +2,7 @@ package com.example.mysqldemo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.mysqldemo.entity.Score;
-import com.example.mysqldemo.entity.dto.ScoreDto;
+import com.example.mysqldemo.entity.ScoreDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

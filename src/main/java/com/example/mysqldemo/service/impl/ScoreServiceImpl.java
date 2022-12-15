@@ -1,12 +1,9 @@
 package com.example.mysqldemo.service.impl;
 
-import cn.hutool.core.collection.ListUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.entity.Score;
-import com.example.mysqldemo.entity.Student;
-import com.example.mysqldemo.entity.dto.ScoreDto;
+import com.example.mysqldemo.entity.ScoreDto;
 import com.example.mysqldemo.mapper.ScoreMapper;
 import com.example.mysqldemo.service.ScoreService;
 import org.springframework.stereotype.Service;

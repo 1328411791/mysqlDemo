@@ -1,9 +1,8 @@
 package com.example.mysqldemo.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.entity.Score;
-import com.example.mysqldemo.entity.dto.ScoreDto;
+import com.example.mysqldemo.entity.ScoreDto;
 import com.example.mysqldemo.service.ScoreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,10 +27,10 @@ public class ScoreController {
         return scoreService.getScoreByStudentId(username);
     }
 
-    @PostMapping()
+    @PostMapping("/addStudentScore")
     @ApiOperation(value = "添加该学生成绩")
     public Result addScore(@RequestBody ScoreDto scoreDto) {
-        return Result.ok("TODO");
+        return Result.ok(scoreDto);
     }
 
     @GetMapping("/{id}")

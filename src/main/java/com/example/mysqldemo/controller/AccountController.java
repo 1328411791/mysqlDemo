@@ -22,7 +22,6 @@ public class AccountController {
 
     @ApiOperation(value = "登录")
     @PostMapping(value = "/login", consumes = "application/x-www-form-urlencoded")
-    @ResponseBody
     public Result login(@RequestParam String username, @RequestParam String password, HttpServletResponse httpServletResponse) throws IOException {
         Result result = accountService.loginStudent(username, password);
         if(result.getSuccess()) {
@@ -30,6 +29,14 @@ public class AccountController {
             httpServletResponse.addCookie(cookie);
         }
         return result;
+    }
+
+    @ApiOperation(value = "登出")
+    @PostMapping(value = "/logout")
+    public Result logout(HttpServletResponse httpServletResponse) throws IOException {
+        Cookie cookie=new Cookie("username","");
+        httpServletResponse.addCookie(cookie);
+        return Result.ok();
     }
 
 }

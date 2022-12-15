@@ -7,9 +7,13 @@ public class StudentScoreDto {
 
     private int studentId;
 
+    private String schoolId;
+
     private int teacherID;
 
     private int courseId;
+
+    private int id;
 
     private int score;
 

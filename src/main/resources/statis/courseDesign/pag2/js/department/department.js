@@ -6,10 +6,10 @@ function getdepartmentList (params) {
     })
 }
 
-function adddepartment (params) {
+function addDepartment (params) {
     //console.log(params)
     return axios ({
-        url: '/department/add',
+        url: '/department',
         method: 'post',
         data: params
     })
@@ -18,8 +18,8 @@ function adddepartment (params) {
 
 function updatedepartment (params) {
     return axios ({
-        url: '/department/update',
-        method: 'post',
+        url: '/department',
+        method: 'put',
         data: params
     })
 }
@@ -27,8 +27,10 @@ function updatedepartment (params) {
 function deletedepartment (params) {
     //console.log(params)
     return axios ( {
-        url: '/department/delete',
+        url: '/department',
         method: 'delete',
-        data: params
+        params:{
+            id: params
+        }
     })
 }

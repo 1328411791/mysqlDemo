@@ -1,12 +1,12 @@
-function getStudentList () {
+function getscoreList () {
     return axios ({
         url: '/score/all',
         method: 'get'
     })
 }
 
-function addStudent (params) {
-    //console.log(params)
+function addScoreById (params) {
+    console.log(params)
     return axios ({
         url: '/score',
         method: 'post',
@@ -34,12 +34,12 @@ function deletescore (params) {
     })
 }
 
-function getscoreByName (params) {
+function getScoreByStudentName (params) {
     return axios ({
-        url: '/score/selectStudenName',
-        method: 'post',
+        url: '/score/getByStudentId',
+        method: 'get',
         params:{
-            scoreName: params
+            studentName: params
         }
     })
 }

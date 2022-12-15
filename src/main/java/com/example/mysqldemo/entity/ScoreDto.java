@@ -9,11 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ScoreDto {
 
+    private int studentId;
+
     private String schoolId;
 
-    private int scoreId;
+    private int id;
 
     private String studentName;
+
+    private String courseId;
 
     private String courseName;
 

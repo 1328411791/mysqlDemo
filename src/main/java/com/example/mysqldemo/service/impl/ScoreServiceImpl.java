@@ -52,7 +52,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, Score> implements
     @Override
     @Transactional
     public Result addScore(StudentScoreDto studentScoreDto) {
-        Course course = courseService.getById(studentScoreDto.getCourseId());
+        Course course = courseService.getById(studentScoreDto.getId());
         if (course == null) {
             return Result.fail("课程不存在");
         }

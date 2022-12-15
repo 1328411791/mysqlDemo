@@ -60,7 +60,7 @@ public class ScoreController {
 
     @DeleteMapping()
     @ApiOperation(value = "删除成绩")
-    public Result deleteScore(@RequestBody Integer id) {
+    public Result deleteScore(@RequestParam Integer id) {
         return Result.ok(scoreService.removeById(id));
     }
 }

@@ -100,7 +100,7 @@
             //添加学生功能
             addDepartment(params) {
                 addDepartment(params).then(res => {
-                    if (res.data.success === 1) {
+                    if (res.data.success === true) {
                         this.$message.success("添加成功")
                         this.init();
                     }

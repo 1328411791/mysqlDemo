@@ -10,19 +10,99 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <title>Element Plus demo</title>
 </head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理系统登录页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background: url(san.png) no-repeat 0px 0px;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        #app {
+            width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            background-color: rgba(75, 81, 95, 0.3);
+            box-shadow: 7px 7px 17px rgba(52, 56, 66, 0.5);
+            border-radius: 250px;
+        }
+        p {
+            margin-top: 30px;
+            margin-left: 20px;
+            color: azure;
+        }
+
+        .input {
+            margin-left: 15px;
+            border-radius: 5px;
+            border-style: hidden;
+            height: 30px;
+            width: 140px;
+            background-color: rgba(216, 191, 216, 0.5);
+            outline: none;
+            color: #f0edf3;
+            padding-left: 10px;
+        }
+
+        .button {
+            border-color: cornsilk;
+            background-color: rgba(100, 149, 237, .7);
+            color: aliceblue;
+            border-style: hidden;
+            border-radius: 5px;
+            width: 100px;
+            height: 31px;
+            font-size: 16px;
+        }
+    </style>
+    <style type="text/css">
+        input::-ms-input-placeholder{text-align: center;}
+        input::-webkit-input-placeholder{text-align: center;}
+    </style>
 <body>
   <!-- 登录 -->
-<div id="app">
-    <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="Login">
-            <el-input v-model="form.username" placeholder="Approved by" />
-        </el-form-item>
-        <el-form-item label="PassWord">
-            <el-input v-model="form.password" placeholder="Approved by" />
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">Query</el-button>
-        </el-form-item>
+
+<div id="app" >
+    <el-form :inline="true" :model="form" class="demo-form-inline" >
+        <h1 style="text-align: center;color: aliceblue;">立即登录</h1>
+        <p>账号:<input v-model="form.username" placeholder="请输入账号">
+            <br>
+            <span id="username_err" style="display: none">用户名已经存在</span>
+        </p>
+        <p>密码:<input type="password" v-model="form.password" placeholder="请输入密码">
+            <br>
+            <span id="password_err" style="display: none">密码输入错误</span>
+        </p>
+        <div style="text-align: center;margin-top: 30px;">
+            <el-form-item >
+                <el-button class="button" type="primary" @click="onSubmit">登录</el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-button class="button" type="primary"@click=window.location.reload()>刷新</el-button>
+            </el-form-item>
+        </div>
     </el-form>
 </div>
 <script>

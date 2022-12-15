@@ -26,6 +26,11 @@ public class StudentController {
         return Result.ok(studentService.getById(id));
     }
 
+    @GetMapping("/all")
+    @ApiOperation(value = "获取所有学生")
+    public Result getAllStudent() {
+        return Result.ok(studentService.list());
+    }
 
     @PostMapping
     @ApiOperation(value = "添加学生")

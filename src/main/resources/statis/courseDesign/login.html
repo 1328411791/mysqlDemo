@@ -16,7 +16,6 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            background: url(background.png) no-repeat 0px 0px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
             -moz-background-size: 100% 100%;
@@ -91,6 +90,7 @@
                 <br>
                 <span id="password_err" style="display: none">密码输入错误</span>
             </p>
+            <p style="text-align: center;color: darkgray;"><a href="#">忘记密码?</a></p>
             <div style="text-align: center;margin-top: 30px;">
                 <input type="button" id="btn" class="button" value="登录" onclick="login_click()">
                 <input type="button" class="button" value="刷新" οnclick="window.parent.frames.item('bottom').location.reload()">
@@ -98,9 +98,9 @@
         </form>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script> import {axios} from "./plugins/axios/axios.min";</script>
         <script>
-            function login_click(){
+            import {axios} from "./plugins/axios/axios.min";
+            function login_click() {
                 var username1 = document.getElementById("username").value;
                 var password1 = document.getElementById("password").value;
                 axios.post('./account/login', {
@@ -108,17 +108,23 @@
                     password: password1
                 })
                     .then(function (response) {
-                        // 处理返回的 JSON 数据
                         console.log(response.data);
+                        const data = response.data;
+                        if (data.success === true) {
+                            alert("登录成功");
+                            window.location.href = "adminview.html";
+                        } else {
+                            alert("登录失败");
+                        }
 
+                        // 处理返回的 JSON 数据
+                        console.log(person);
                     })
                     .catch(function (error) {
                         //处理错误
-                        alert("邮箱或密码错误，请重新输入！");
+                        console.log(error)
                     })
             }
-
-
             //获取注册时存储在localStorage中的值
         </script>
     </div>

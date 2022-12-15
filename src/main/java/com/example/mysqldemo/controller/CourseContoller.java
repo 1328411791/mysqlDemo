@@ -45,7 +45,7 @@ public class CourseContoller {
 
     @DeleteMapping()
     @ApiOperation(value = "删除")
-    public Result deleteCourse(@RequestBody String id) {
+    public Result deleteCourse(@RequestParam String id) {
         return Result.ok(courseService.removeById(id));
     }
 

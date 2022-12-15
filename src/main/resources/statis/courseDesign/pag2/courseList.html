@@ -15,41 +15,19 @@
 <body>
 <div id="div" style="padding: 20px; height: 100%">
         <div><b style="color: #000; font-size: 30px;">课程列表</b></div>
-        <el-input style="width: 250px" v-model="inputMessage" placeholder="请输入课程" clearable
-                  @keyup.enter.native="handleQuery">
-            <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer"
-               @click="handleQuery"></i>
-        </el-input>
-        <el-button type="primary" @click="showAddStu">+ 添加课程</el-button>
+        <el-button type="primary" @click="showAddcourse()">+ 添加课程</el-button>
+
            <el-table :data="tableData" class="table-box" >
+               <el-table-column prop="id" label="课程id"></el-table-column>
             <el-table-column prop="courseName" label="课程名称"></el-table-column>
             <el-table-column prop="departmentId" label="学院id"></el-table-column>
-            <el-table-column prop="id" label="课程id"></el-table-column>
             <el-table-column prop="teacherId" label="教师id"></el-table-column>
-            <el-table-column prop="score" label="成绩"></el-table-column>
-            <el-table-column prop="Stid" label="学生学号"></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="props">
                     <el-button type="primary" plain @click="showEditcourse(props.row)">编辑</el-button>
                     <el-button type="danger" plain @click="deletecourse(props.row)">删除</el-button>
                 </template>
             </el-table-column>
-
-        </el-table>
-        <el-table :data="tableData" class="table-box" >
-            <el-table-column prop="courseName" label="课程名称"></el-table-column>
-            <el-table-column prop="departmentId" label="学院id"></el-table-column>
-            <el-table-column prop="id" label="课程id"></el-table-column>
-            <el-table-column prop="teacherId" label="教师id"></el-table-column>
-            <el-table-column prop="score" label="成绩"></el-table-column>
-            <el-table-column prop="Stid" label="学生学号"></el-table-column>
-            <el-table-column label="操作">
-                <template slot-scope="props">
-                    <el-button type="primary" plain @click="showEditStu(props.row)">编辑</el-button>
-                    <el-button type="danger" plain @click="deleteStu(props.row)">删除</el-button>
-                </template>
-            </el-table-column>
-
         </el-table>
 
     <el-dialog width="40%" title="添加学生课程信息" :visible.sync="dialogTableVisible4add">
@@ -57,44 +35,32 @@
             <el-form-item label="课程名称" prop="courseName">
                 <el-input v-model="formData.courseName"></el-input>
             </el-form-item>
-            <el-form-item label="学院" prop="departmentId">
+            <el-form-item label="学院id" prop="departmentId">
                 <el-input v-model="formData.departmentId"></el-input>
             </el-form-item>
             <el-form-item label="教师id" prop="teacherId">
                 <el-input v-model="formData.password"></el-input>
             </el-form-item>
-            <el-form-item label="成绩" prop="score">
-                <el-input v-model="formData.score"></el-input>
-            </el-form-item>
-            <el-form-item label="学生学号" prop="Stid">
-                <el-input v-model="formData.Stid"></el-input>
-            </el-form-item>
             <el-form-item align="right">
-                <el-button type="primary" @click="addcourse()">添加</el-button>
+                <el-button type="primary" @click="addcourse(formData)">添加</el-button>
                 <el-button @click="resetForm('formData')">重置</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 
     <el-dialog width="40%" title="编辑课程信息" :visible.sync="dialogTableVisible4edit">
-        <el-form :model="editFormData" :rules="rules" ref="editForm" label-width="100px">
+        <el-form :model="editFormData" ref="editForm" label-width="100px">
+            <el-form-item label="课程id" prop="id">
+                <el-input v-model="editFormData.id"></el-input>
+            </el-form-item>
             <el-form-item label="课程名称" prop="courseName">
                 <el-input v-model="editFormData.courseName"></el-input>
             </el-form-item>
             <el-form-item label="学院id" prop="departmentId">
                 <el-input v-model="editFormData.departmentId"></el-input>
             </el-form-item>
-            <el-form-item label="课程id" prop="id">
-                <el-input v-model="editFormData.id"></el-input>
-            </el-form-item>
             <el-form-item label="教师id" prop="teacherId">
                 <el-input v-model="editFormData.teacherId"></el-input>
-            </el-form-item>
-            <el-form-item label="成绩" prop="score">
-                <el-input v-model="editFormData.score"></el-input>
-            </el-form-item>
-            <el-form-item label="学生学号" prop="Stid">
-                <el-input v-model="editFormData.Stid"></el-input>
             </el-form-item>
             <el-form-item align="right">
                 <el-button type="primary" @click="updatecourse()">修改</el-button>
@@ -129,11 +95,6 @@
                 }).catch(err => {
                     this.$message.error('请求出错了：' + err)
                 })
-            },
-            // 分页 条件查询
-            handleQuery() {
-                this.page = 1;
-                this.init();
             },
             showAddcourse() {
                 //弹出窗口

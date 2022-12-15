@@ -49,7 +49,7 @@ public class StudentController {
 
     @DeleteMapping()
     @ApiOperation(value = "删除学生")
-    public Result deleteStudent(@RequestParam int id) {
+    public Result deleteStudent(@RequestParam Integer id) {
         return Result.ok(studentService.removeById(id));
     }
 }

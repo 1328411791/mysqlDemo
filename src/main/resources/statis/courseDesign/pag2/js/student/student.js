@@ -19,9 +19,7 @@ function updateStudent (params) {
     return axios ({
         url: '/student',
         method: 'put',
-        data:{
-            id: params,
-        }
+        data: params,
     })
 }
 
@@ -30,9 +28,8 @@ function deleteStudent (params) {
     return axios ( {
         url: '/student',
         method: 'delete',
-        data: params,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+        params:{
+            id: params
         }
     })
 }

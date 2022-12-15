@@ -1,7 +1,9 @@
 package com.example.mysqldemo.controller;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.entity.Student;
+import com.example.mysqldemo.entity.Teacher;
 import com.example.mysqldemo.service.AccountService;
 import com.example.mysqldemo.service.StudentService;
 import io.swagger.annotations.Api;
@@ -51,8 +53,8 @@ public class AccountController {
 
     @ApiOperation(value = "注册")
     @PostMapping(value = "/register" )
-    public Result register(@RequestBody Student student) {
-        return accountService.register(student);
+    public Result register(@RequestBody Teacher teacher) {
+        return accountService.register(teacher);
     }
 
 }

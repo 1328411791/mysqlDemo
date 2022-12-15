@@ -6,4 +6,5 @@ import com.example.mysqldemo.entity.Course;
 public interface CourseService extends IService<Course> {
 
 
+    Course getCourseByName(String courseName);
 }

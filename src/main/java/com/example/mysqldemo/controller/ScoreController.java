@@ -3,12 +3,16 @@ package com.example.mysqldemo.controller;
 import com.example.mysqldemo.common.Result;
 import com.example.mysqldemo.entity.Score;
 import com.example.mysqldemo.entity.ScoreDto;
+import com.example.mysqldemo.entity.StudentScoreDto;
 import com.example.mysqldemo.service.ScoreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Api(tags = "成绩管理")
 @RestController
@@ -20,17 +24,14 @@ public class ScoreController {
 
     @ApiOperation(value = "根据学生名字查询成绩")
     @GetMapping("/getByStudentId")
-    public Result getScoreByStudentId(@CookieValue("username") String username) {
-        if(username == null) {
-            return Result.fail("请先登录");
-        }
-        return scoreService.getScoreByStudentId(username);
+    public Result getScoreByStudentId(@RequestParam String studentName) {
+        return scoreService.getScoreByStudentId(studentName);
     }
 
     @PostMapping("/addStudentScore")
     @ApiOperation(value = "添加该学生成绩")
-    public Result addScore(@RequestBody ScoreDto scoreDto) {
-        return Result.ok(scoreDto);
+    public Result addScore(@RequestBody StudentScoreDto studentScoreDto) {
+        return scoreService.addScore(studentScoreDto);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +43,7 @@ public class ScoreController {
     @GetMapping("/all")
     @ApiOperation(value = "查询所有成绩")
     public Result getAllScore() {
-        return Result.ok(scoreService.list());
+        return scoreService.getAllStudentScore();
     }
 
     @PostMapping()

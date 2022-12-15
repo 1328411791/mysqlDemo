@@ -1,8 +1,12 @@
 package com.example.mysqldemo.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ScoreDto {
 
     private String schoolId;
@@ -13,7 +17,7 @@ public class ScoreDto {
 
     private String courseName;
 
-    private String score;
+    private int score;
 
     private String teacherName;
 

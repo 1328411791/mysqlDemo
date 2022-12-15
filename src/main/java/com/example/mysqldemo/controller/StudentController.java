@@ -34,6 +34,12 @@ public class StudentController {
         return Result.ok(studentList,(long)studentList.size());
     }
 
+    @PostMapping("/selectStudenName")
+    @ApiOperation(value = "根据学生名字查询学生")
+    public Result selectStudenName(@RequestParam String studentName) {
+        return studentService.selectStudentName(studentName);
+    }
+
     @PostMapping
     @ApiOperation(value = "添加学生")
     public Result addStudent(@RequestBody Student student) {

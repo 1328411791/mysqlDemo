@@ -31,7 +31,7 @@ public class TeacherController {
 
     @ApiOperation(value = "添加教师")
     @PostMapping()
-    public Result addTeacher(@RequestParam Teacher teacher) {
+    public Result addTeacher(@RequestBody Teacher teacher) {
         return Result.ok(teacherService.save(teacher));
     }
 

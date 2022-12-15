@@ -116,8 +116,12 @@
                 },
                 // 分页 条件查询
                 handleQuery() {
-                    this.page = 1;
-                    this.init();
+                    getStudentByName(this.inputMessage).then(res => {
+                        this.tableData = res.data.data
+                        this.counts = res.data.total
+                    }).catch(err => {
+                        this.$message.error('请求出错了：' + err)
+                    })
                 },
                 showAddStu() {
                     //弹出窗口
@@ -125,6 +129,7 @@
                 },
                 //添加学生功能
                 addStu(params) {
+
                     addStudent(params).then(res => {
                         if(res.data.success === 1) {
                             this.$message.success("添加成功")
@@ -168,7 +173,6 @@
                     })
                     this.formData = {};
                     this.dialogTableVisible4edit = false;
-                    this.init();
                 },
 
                 //删除学生

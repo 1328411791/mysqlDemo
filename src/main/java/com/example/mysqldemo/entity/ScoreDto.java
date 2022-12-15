@@ -7,6 +7,8 @@ public class ScoreDto {
 
     private String schoolId;
 
+    private int CourseId;
+
     private String studentName;
 
     private String courseName;

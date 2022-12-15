@@ -42,7 +42,7 @@ public class CourseContoller {
     }
 
     @DeleteMapping()
-    @ApiOperation(value = "添加学生")
+    @ApiOperation(value = "删除")
     public Result deleteCourse(@RequestBody String id) {
         return Result.ok(courseService.removeById(id));
     }

@@ -181,4 +181,50 @@
     </div>
 </div>
 </body>
+<script>
+
+    const App = {
+        <!-- 登录 -->
+        data() {
+            return {
+                form: {
+                    username: '',
+                    password: ''
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                alert(this.form.username+" "+this.form.password);
+                axios.post("/student/all",
+                    {
+                        // The data to be sent as part of the request
+                        username: this.form.username,
+                        password: this.form.password
+                    }, {
+                        // The optional configuration object
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                    .then(function (response) {
+                        console.log(response.data);
+                        const data = response.data;
+                        if (data.success === true) {
+                            alert("登录成功");
+                            window.location.href = "adminview.html";
+                        } else {
+                            alert("登录失败");
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
+    };
+    const app = Vue.createApp(App);
+    app.use(ElementPlus);
+    app.mount("#app");
+</script>
 </html>
